@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth/login"></ion-back-button> 
+    </ion-buttons>
+    <ion-title text-center>Registro</ion-title> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="signupGroup" (ngSubmit)="handleSignup()">
+    <ion-list lines="none">
+      <ion-item-group class="ion-margin-bottom">
+        <ion-item color="light">
+          <ion-icon name="person" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Nombre"
+            labelPlacement="floating"
+            formControlName="name"
+            type="text"
+            name="name"
+            placeholder="Ingresa tu nombre"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="signupGroup.get('name')!.invalid && (signupGroup.get('name')!.dirty || signupGroup.get('name')!.touched)">
+          <p *ngIf="signupGroup.get('name')!.errors!['required']">El nombre es requerido</p>
+          <p *ngIf="signupGroup.get('name')!.errors!['minlength']">El nombre debe tener al menos 3 caracteres</p>
+          <p *ngIf="signupGroup.get('name')!.errors!['maxlength']">El nombre no puede tener más de 60 caracteres</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="mail" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Correo electrónico"
+            labelPlacement="floating"
+            formControlName="email"
+            type="email"
+            name="email"
+            placeholder="Ingresa tu correo electrónico"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="signupGroup.get('email')!.invalid && (signupGroup.get('email')!.dirty || signupGroup.get('email')!.touched)">
+          <p *ngIf="signupGroup.get('email')!.errors!['required']">El correo electrónico es requerido</p>
+          <p *ngIf="signupGroup.get('email')!.errors!['email']">Debe ser un correo electrónico válido</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="key" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Contraseña"
+            labelPlacement="floating"
+            formControlName="password"
+            type="password"
+            name="password"
+            placeholder="Ingresa tu contraseña"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="signupGroup.get('password')!.invalid && (signupGroup.get('password')!.dirty || signupGroup.get('password')!.touched)">
+          <p *ngIf="signupGroup.get('password')!.errors!['required']">La contraseña es requerido</p>
+          <p *ngIf="signupGroup.get('password')!.errors!['minlength']">La contraseña debe tener al menos 6 caracteres</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="key" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Confirmar contraseña"
+            labelPlacement="floating"
+            formControlName="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirma la contraseña"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="signupGroup.get('confirmPassword')!.invalid && (signupGroup.get('confirmPassword')!.dirty || signupGroup.get('confirmPassword')!.touched)">
+          <p *ngIf="signupGroup.get('confirmPassword')!.errors!['MatchPassword']">Las contraseñas deben coincidir</p>
+        </ion-text>
+      </ion-item-group>
+    </ion-list>
+
+     <ion-button 
+      [disabled]="!signupGroup.valid"
+      expand="block" 
+      shape="round" 
+      type="submit" 
+      size="large"
+      color="primary">
+      <ion-text>REGISTRARSE</ion-text>
+    </ion-button>
+
+  </form>
+</ion-content>

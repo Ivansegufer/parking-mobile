@@ -1,0 +1,64 @@
+<ion-header class="ion-no-border">
+  <ion-list lines="none" class="ion-margin-top">
+    <ion-list-header class="ion-padding">
+      <ion-label>
+        Cerrar el movimiento
+        <p>
+          El movimiento será cerrado
+        </p>
+      </ion-label>
+    </ion-list-header>
+  </ion-list>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ movement.plateNumber }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-label>
+                <p><strong>Fecha entrada:</strong> {{ movement.enterDate }}</p>
+            </ion-label>
+            <ion-label>
+                <p><strong>Establecimiento:</strong> {{ movement.establishmentName }}</p>
+            </ion-label>
+            <ion-label>
+                <p><strong>Modelo:</strong> {{ movement.model }}</p>
+            </ion-label>
+            <ion-label>
+                <p><strong>Año:</strong> {{ movement.year }}</p>
+            </ion-label>
+            <ion-label>
+                <p><strong>Color:</strong> {{ movement.color }}</p>
+            </ion-label>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card class="ion-margin-top ion-text-center">
+        <ion-card-header>
+            <ion-card-title>Monto a cobrar</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-label>{{ amount | currency }}</ion-label>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card class="ion-margin-top ion-text-center">
+        <ion-card-header>
+            <ion-card-title>Hora de salida</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-label>{{ currentDateTime | date: 'dd/MM/yyyy HH:mm' }}</ion-label>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-button
+      (click)="close()"
+      expand="block"
+      size="large"
+      shape="round"
+      color="primary"
+      type="submit">
+      <ion-text>CERRAR EL MOVIMIENTO</ion-text>
+    </ion-button>
+</ion-content>

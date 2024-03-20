@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Movimientos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar 
+    (input)="onSearchInput($event)" 
+    placeholder="Buscar">
+  </ion-searchbar>
+  <ion-list>
+    <ion-item 
+      *ngFor="let movement of movements"
+      (click)="handleCloseMovement(movement)">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="car-sport"></ion-icon>
+            {{ movement.plateNumber }}
+          </ion-card-title>
+          <ion-card-subtitle>
+            <ion-icon name="time-outline"></ion-icon>
+            {{ movement.enterDate }} <br>
+            {{ movement.establishmentName }}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p><strong>Modelo:</strong> {{ movement.model }}</p>
+          <p><strong>Año:</strong> {{ movement.year }}</p>
+          <p><strong>Color:</strong> {{ movement.color }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addMovement()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/establishment"></ion-back-button> 
+    </ion-buttons>
+    <ion-title text-center>Nuevo establecimiento</ion-title> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="establishmentGroup" (ngSubmit)="handleCreate()">
+    <ion-list lines="none">
+      <ion-item-group class="ion-margin-bottom">
+        <ion-item color="light">
+          <ion-icon name="person" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Nombre del Establecimiento"
+            labelPlacement="floating"
+            formControlName="name"
+            type="text"
+            name="name"
+            placeholder="Ingresa el nombre del establecimiento"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="establishmentGroup.get('name')!.invalid && (establishmentGroup.get('name')!.dirty || establishmentGroup.get('name')!.touched)">
+          <p *ngIf="establishmentGroup.get('name')!.errors!['required']">El nombre del establecimiento es requerido</p>
+          <p *ngIf="establishmentGroup.get('name')!.errors!['minlength']">El nombre del establecimiento debe tener al menos 5 caracteres</p>
+          <p *ngIf="establishmentGroup.get('name')!.errors!['maxlength']">El nombre del establecimiento no puede tener más de 50 caracteres</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="document-text" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Descripción"
+            labelPlacement="floating"
+            formControlName="description"
+            type="text"
+            name="description"
+            placeholder="Ingresa la descripción del establecimiento"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="establishmentGroup.get('description')!.invalid && (establishmentGroup.get('description')!.dirty || establishmentGroup.get('description')!.touched)">
+          <p *ngIf="establishmentGroup.get('description')!.errors!['required']">La descripción del establecimiento es requerida</p>
+          <p *ngIf="establishmentGroup.get('description')!.errors!['minlength']">La descripción del establecimiento debe tener al menos 10 caracteres</p>
+          <p *ngIf="establishmentGroup.get('description')!.errors!['maxlength']">La descripción del establecimiento no puede tener más de 100 caracteres</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="pin" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Dirección"
+            labelPlacement="floating"
+            formControlName="address"
+            type="text"
+            name="address"
+            placeholder="Ingresa la dirección del establecimiento"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="establishmentGroup.get('address')!.invalid && (establishmentGroup.get('address')!.dirty || establishmentGroup.get('address')!.touched)">
+          <p *ngIf="establishmentGroup.get('address')!.errors!['required']">La dirección del establecimiento es requerida</p>
+          <p *ngIf="establishmentGroup.get('address')!.errors!['minlength']">La dirección del establecimiento debe tener al menos 10 caracteres</p>
+          <p *ngIf="establishmentGroup.get('address')!.errors!['maxlength']">La dirección del establecimiento no puede tener más de 200 caracteres</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="cube" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Total de puestos"
+            labelPlacement="floating"
+            formControlName="totalStands"
+            type="number"
+            name="totalStands"
+            [max]="500"
+            placeholder="Ingresa el total de puestos"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="establishmentGroup.get('totalStands')!.invalid && (establishmentGroup.get('totalStands')!.dirty || establishmentGroup.get('totalStands')!.touched)">
+          <p *ngIf="establishmentGroup.get('totalStands')!.errors!['required']">El total de puestos es requerido</p>
+        </ion-text>
+        <ion-item color="light">
+          <ion-icon name="cash" slot="start" color="medium"></ion-icon> 
+          <ion-input
+            label="Tarifa por minuto"
+            labelPlacement="floating"
+            formControlName="fare"
+            type="number"
+            name="fare"
+            [max]="50"
+            placeholder="Ingresa la tarifa por minuto"
+          ></ion-input>
+        </ion-item>
+        <ion-text 
+          color="danger" 
+          *ngIf="establishmentGroup.get('fare')!.invalid && (establishmentGroup.get('fare')!.dirty || establishmentGroup.get('fare')!.touched)">
+          <p *ngIf="establishmentGroup.get('fare')!.errors!['required']">La tarifa por minuto es requerida</p>
+        </ion-text>
+      </ion-item-group>
+    </ion-list>
+
+     <ion-button 
+      [disabled]="!establishmentGroup.valid"
+      expand="block" 
+      shape="round" 
+      type="submit" 
+      size="large"
+      color="primary">
+      <ion-text>REGISTRAR ESTABLECIMIENTO</ion-text>
+    </ion-button>
+
+  </form>
+</ion-content>

@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/movement"></ion-back-button> 
+    </ion-buttons>
+    <ion-title text-center>Nuevo movimiento</ion-title> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <mat-vertical-stepper #stepper linear>
+    <mat-step [stepControl]="carGroup">
+      <ng-template matStepLabel>Carro</ng-template>
+      <form [formGroup]="carGroup">
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Número de Placa</ion-label>
+            <ion-input formControlName="plateNumber" type="text"></ion-input>
+            <ion-icon name="search" slot="end" (click)="searchCar()"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Modelo</ion-label>
+            <ion-input formControlName="model" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Año</ion-label>
+            <ion-input formControlName="year" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Color</ion-label>
+            <ion-input formControlName="color" type="text"></ion-input>
+          </ion-item>
+        </ion-list>
+      </form>
+      <div class="ion-padding-top">
+        <ion-button (click)="nextStepPreviousCar()">Siguiente</ion-button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="establishmentGroup">
+      <ng-template matStepLabel>Establecimiento</ng-template>
+      <ion-list>
+        <ion-item *ngFor="let establishment of establishments" (click)="selectEstablishment(establishment)">
+          <ion-card [class.selected]="establishmentSelected === establishment">
+            <ion-card-header>
+              <ion-card-title>{{ establishment.name }}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+      <div class="ion-padding-top">
+        <ion-button (click)="stepper.previous()">Atrás</ion-button>
+        <ion-button (click)="stepper.next()">Siguiente</ion-button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Fecha y Hora</ng-template>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="calendar-outline" size="large"></ion-icon>
+            Salida
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <h2 class="ion-text-center ion-padding-top">{{ currentDateTime | date: 'dd/MM/yyyy' }}</h2>
+          <h3 class="ion-text-center ion-padding">{{ currentDateTime | date: 'HH:mm' }}</h3>
+        </ion-card-content>
+      </ion-card>
+      <div class="ion-padding-top">
+        <ion-button (click)="stepper.previous()">Atrás</ion-button>
+        <ion-button (click)="finalize()">Finalizar</ion-button> 
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</ion-content>
