@@ -54,6 +54,28 @@
       </div>
     </mat-step>
 
+    <mat-step [stepControl]="standGroup">
+      <ng-template matStepLabel>Puesto</ng-template>
+      <ion-grid>
+        <ion-row *ngFor="let row of standRows">
+          <ion-col *ngFor="let column of standColumns">
+            <ion-card 
+              (click)="selectStand(row, column)"
+              [class.stand-selected]="standGroup.get('code')!.value === column + row"
+              [class.stand-occupied]="verifyStandOccupied(column + row)">
+              <ion-card-content 
+                style="text-align: center; font-size: 20px; font-weight: bold; padding: 12px;">
+                {{ column + row }}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="ion-padding-top">
+        <ion-button (click)="stepper.next()">Siguiente</ion-button>
+      </div>
+    </mat-step>
+
     <mat-step>
       <ng-template matStepLabel>Fecha y Hora</ng-template>
       <ion-card>

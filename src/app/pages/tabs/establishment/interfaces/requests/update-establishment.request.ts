@@ -4,4 +4,6 @@ export interface IUpdateEstablishmentRequest {
     description: string;
     address: string;
     totalStands: number;
+    standRowsJson: string;
+    standColumnsJson: string;
 }

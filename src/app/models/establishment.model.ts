@@ -6,6 +6,8 @@ export class Establishment {
         public address: string,
         public totalStands: number,
         public totalOccupiedStands: number,
-        public fare: number
+        public fare: number,
+        public standRowsJson: string,
+        public standColumnsJson: string
     ) {}
 }

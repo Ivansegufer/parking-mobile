@@ -5,4 +5,6 @@ export interface ICreateEstablishmentRequest {
     address: string;
     totalStands: number;
     fare: number;
+    standRowsJson: string;
+    standColumnsJson: string;
 }

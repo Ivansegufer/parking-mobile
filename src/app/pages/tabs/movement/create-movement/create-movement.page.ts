@@ -17,6 +17,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { MovementService } from "../../../../services/movement.service";
 import { ICreateMovementRequest } from "../interfaces/requests/create-movement.request";
 import * as moment from "moment";
+import { StandService } from "../../../../services/stand.service";
 
 @Component({
     selector: 'app-create-movement',
@@ -30,11 +31,17 @@ export class CreateMovementPage implements OnInit, OnDestroy {
     public movementGroup: FormGroup;
     public carGroup: FormGroup;
     public establishmentGroup: FormGroup;
+    public standGroup: FormGroup;
 
     public establishments: Establishment[] = [];
     public currentDateTime: Date = new Date();
     public establishmentSelected: Establishment | null = null;
     public carSearched: Car | null = null;
+    public wasCarSearched: boolean = false;
+
+    public standColumns: string[] = [];
+    public standRows: number[] = [];
+    public occupiedStandCodes: string[] = [];
 
     private intervalId: number | null = null;
     private userLogged: User | null = null;
@@ -49,6 +56,7 @@ export class CreateMovementPage implements OnInit, OnDestroy {
         private readonly carService: CarService,
         private readonly movementService: MovementService,
         private readonly establishmentService: EstablishmentService,
+        private readonly standService: StandService,
         private readonly formBuilder: FormBuilder
     )
     {
@@ -69,6 +77,10 @@ export class CreateMovementPage implements OnInit, OnDestroy {
             id: [null, [Validators.required]]
         });
 
+        this.standGroup = this.formBuilder.group({
+            code: ['', [Validators.required]]
+        });
+
         this.carGroup.get('model')!.disable();
         this.carGroup.get('year')!.disable();
         this.carGroup.get('color')!.disable();
@@ -80,7 +92,10 @@ export class CreateMovementPage implements OnInit, OnDestroy {
             const user = JSON.parse(userJson!) as User;
             this.userLogged = user;
             this.establishmentService.getAllByUserId(user.id)
-              .subscribe(res => this.establishments = res);
+              .subscribe(res => {
+                this.establishments = (res as Establishment[])
+                    .filter(establishment => establishment.totalStands !== establishment.totalOccupiedStands);
+            });
           });
 
         this.intervalId = window.setInterval(() => {
@@ -95,6 +110,11 @@ export class CreateMovementPage implements OnInit, OnDestroy {
     public nextStepPreviousCar(): void {
         if (!this.carGroup.valid) {
             this.commonService.showToast("Se debe completar los datos del carro");
+            return;
+        }
+
+        if (!this.wasCarSearched) {
+            this.commonService.showToast("Se debe buscar el vehículo");
             return;
         }
 
@@ -169,6 +189,7 @@ export class CreateMovementPage implements OnInit, OnDestroy {
                     this.enableCarControls();
                 }
             })
+        this.wasCarSearched = true;
     }
 
     private setCarInfo(): void {
@@ -187,13 +208,30 @@ export class CreateMovementPage implements OnInit, OnDestroy {
         this.establishmentSelected = establishment;
         this.establishmentGroup.get('id')!
           .setValue(establishment.id);
+        this.standRows = JSON.parse(establishment.standRowsJson);
+        this.standColumns = JSON.parse(establishment.standColumnsJson);
+
+        this.standService.getAllOccupiedStands(establishment.id)
+            .subscribe(res => this.occupiedStandCodes = res);
+    }
+
+    public verifyStandOccupied(standCode: string): boolean {
+        return this.occupiedStandCodes.includes(standCode);
+    }
+
+    public selectStand(row: number, column: string): void {
+        const standCode = column + row;
+        const occupied = this.verifyStandOccupied(standCode);
+        if (occupied) return;
+        this.standGroup.get('code')!.setValue(standCode);
     }
 
     public finalize(): void {
         const createMovement: ICreateMovementRequest = {
             carId: this.carSearched!.id,
             establishmentId: this.establishmentGroup.get('id')!.value,
-            enterDate: moment().format("YYYY-MM-DD HH:mm:ss")
+            enterDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+            standCode: this.standGroup.get('code')!.value
         };
         this.movementService.create(createMovement)
             .subscribe({

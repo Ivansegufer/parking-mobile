@@ -24,10 +24,11 @@
           <ion-card-subtitle>
             <ion-icon name="time-outline"></ion-icon>
             {{ movement.enterDate }} <br>
-            {{ movement.establishmentName }}
+            {{ movement.establishmentName }} <br>
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
+          <p><strong>Puesto:</strong> {{ movement.standCode }}</p>
           <p><strong>Modelo:</strong> {{ movement.model }}</p>
           <p><strong>Año:</strong> {{ movement.year }}</p>
           <p><strong>Color:</strong> {{ movement.color }}</p>

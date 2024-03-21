@@ -48,6 +48,7 @@ export class CloseMovementComponent implements OnInit, OnDestroy {
 
         const closeMovementRequest: ICloseMovementRequest = {
             id: this.movement.movementId,
+            establishmentId: this.movement.establishmentId,
             amount: this.amount,
             exitDate: moment().format("YYYY-MM-DD HH:mm:ss")
         };

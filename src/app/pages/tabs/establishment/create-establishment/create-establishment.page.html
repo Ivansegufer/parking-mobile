@@ -73,6 +73,7 @@
             formControlName="totalStands"
             type="number"
             name="totalStands"
+            [readonly]="true"
             [max]="500"
             placeholder="Ingresa el total de puestos"
           ></ion-input>
@@ -102,7 +103,58 @@
       </ion-item-group>
     </ion-list>
 
-     <ion-button 
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card class="add-card" (click)="addColumn()">
+            <ion-card-content 
+              style="text-align: center; font-size: 30px; font-weight: bold; padding: 2px; color: green;">
+              +
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card class="add-card" (click)="removeColumn()">
+            <ion-card-content 
+              style="text-align: center; font-size: 30px; font-weight: bold; padding: 2px; color: red;">
+              -
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let row of rows">
+        <ion-col *ngFor="let column of columns">
+          <ion-card>
+            <ion-card-content 
+              style="text-align: center; font-size: 20px; font-weight: bold; padding: 12px;">
+              {{ column + row }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-card class="add-card" (click)="addRow()">
+            <ion-card-content 
+              style="text-align: center; font-size: 30px; font-weight: bold; padding: 2px; color: green;">
+              +
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card class="add-card" (click)="removeRow()">
+            <ion-card-content 
+              style="text-align: center; font-size: 30px; font-weight: bold; padding: 2px; color: red;">
+              -
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-button 
       [disabled]="!establishmentGroup.valid"
       expand="block" 
       shape="round" 

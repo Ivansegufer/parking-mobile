@@ -2,6 +2,14 @@
   background-color: #cfd8dc;
 }
 
+.stand-selected {
+  background-color: #32CD32;
+}
+
+.stand-occupied {
+  background-color: #e36b2c;
+}
+
 ion-item {
     border-radius: 10px;
     margin: .25em;
@@ -16,4 +24,9 @@ ion-button {
 
 ion-content ion-card {
   width: 100%;
+}
+
+ion-card {
+  margin: 2px;
+  padding: 2px;
 }
